@@ -1,0 +1,73 @@
+version: '2'
+services:
+ odm:
+  image: ibmcom/odm:8.10
+  ports:
+   - '9060:9060'
+  environment:
+   - LICENSE=accept
+   - SAMPLE=true
+  mem_limit: 2048M
+  mem_reservation: 2048M
+  restart: unless-stopped
+ redis:
+  image: bitnami/redis:latest
+  environment:
+   - ALLOW_EMPTY_PASSWORD=yes
+  ports:
+   - '6379:6379'
+   - '9376:9376'
+  restart: unless-stopped
+ stock-quote:
+  image: stocktraders/stock-quote:latest
+  ports:
+   - '9078:9080'
+   - '9441:9443'
+  mem_limit: 300M
+  environment:
+   - REDIS_URL=redis://redis:6379
+   - JWT_AUDIENCE=stock-trader
+   - JWT_ISSUER=http://stock-trader.ibm.com
+  depends_on:
+   - redis
+  restart: unless-stopped
+ portfolio:
+  image: stocktrader/portfolio
+  ports:
+   - '9079:9080'
+   - '9442:9443'
+  mem_limit: 300M
+  environment:
+   - JWT_AUDIENCE=stock-trader
+   - JWT_ISSUER=http://stock-trader.ibm.com
+   - JDBC_HOST=172.17.76.28
+   - JDBC_PORT=50000
+   - JDBC_DB=STOCKTRD
+   - JDBC_ID=db2inst1
+   - JDBC_PASSWORD=db2inst1
+   - ODM_URL=http://odm:9060/DecisionService/rest/ICP_Trader_Dev_1/determineLoyalty
+   - STOCK_QUOTE_URL=http://stock-quote:9080/stock-quote
+   - WATSON_PWD=empty
+   - MQ_USR=user
+   - MQ_PWD=bitnami
+   - MQ_VIRTUAL_HOST=/
+   - MQ_HOST_NAME=172.17.76.28
+   - MQ_PORT=5672
+   - MQ_QUEUE=TESTQ
+  depends_on:
+   - odm
+   - stock-quote
+  restart: unless-stopped
+ trader:
+  image: ibmstocktrader/trader:latest
+  ports:
+   - '9080:9080'
+   - '9443:9443'
+  mem_limit: 300M
+  environment:
+   - JWT_AUDIENCE=stock-trader
+   - JWT_ISSUER=http://stock-trader.ibm.com
+   - PORTFOLIO_URL=http://portfolio:9080/portfolio
+  depends_on:
+   - portfolio
+  restart: unless-stopped
