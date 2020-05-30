@@ -57,13 +57,14 @@ it can be running on "bare metal" in a traditional on-premises environment.
  ### Build
 To build `portfolio` clone this repo and run:
 ```bash
+cd stocktrader-jil-v2/src/portfolio/
 mvn package
-docker build -t portfolio:latest -t <ICP_CLUSTER>.icp:8500/stock-trader/portfolio:latest .
-docker tag portfolio:latest <ICP_CLUSTER>.icp:8500/stock-trader/portfolio:latest
-docker push <ICP_CLUSTER>.icp:8500/stock-trader/portfolio:latest
+docker build -t portfolio:latest -t stocktraders/portfolio:latest .
+docker tag portfolio:latest stocktraders/portfolio:latest
+docker push stocktraders/portfolio:latest
 ```
 
-### Include below enviroment variables for RabbitMq configuration
+### Include below enviroment variables for configuration
 | Env Var | Purpose |
 |---------|---------|
 |`LOYALTY_URL` | The url of the loyalty service, eg. `http://192.168.18.100:31422/DecisionService/rest/v1/ICP_Trader_Dev_1/determineLoyalty` |

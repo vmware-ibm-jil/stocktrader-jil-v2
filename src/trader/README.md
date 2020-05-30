@@ -18,8 +18,6 @@ The **trader** microservice provides the UI for the *Stock Trader* sample.  It c
 which then calls various other services as needed.  It uses the *mpRestClient* to make the call, and passes a JWT on the
 request, which **portfolio** checks for via *mpJwt*.
 
-![Architecural Diagram](lab/stock-trader.png)
-
 The main entry point is the **summary** servlet, which lets you choose an operation and a portfolio to act upon.  It
 transfers control to other servlets, such as **addPortfolio**, **viewPortfolio**, and **addStock**, each of which
 transfers control back to **summary** when done.  The **viewPortfolio** and **addStock** servlets expect a query param
@@ -41,16 +39,9 @@ This is version 1 of the *Stock Trader* UI, implemented in **Java**, and is deli
  ### Build
 To build `trader` clone this repo and run:
 ```bash
+cd stocktrader-jil-v2/src/trader/
 mvn package
-docker build -t trader .
-docker tag trader:latest <ICP_CLUSTER>.icp:8500/stock-trader/trader:latest
-docker push <ICP_CLUSTER>.icp:8500/stock-trader/trader:latest
-```
- 
-In practice this means you'll run something like:
-```bash
-docker build -t trader .
-docker tag trader:latest mycluster.icp:8500/stock-trader/trader:latest
-docker push mycluster.icp:8500/stock-trader/trader:latest
- 
+docker build -t trader:latest -t stocktraders/trader:latest .
+docker tag trader:latest stocktraders/trader:latest
+docker push stocktraders/trader:latest
 ```
