@@ -41,7 +41,7 @@ To build `trader` clone this repo and run:
 ```bash
 cd stocktrader-jil-v2/src/trader/
 mvn package
-docker build -t trader:latest -t stocktraders/trader:latest .
-docker tag trader:latest stocktraders/trader:latest
-docker push stocktraders/trader:latest
+docker build -t trader:latest -t stocktradersjilv2/trader:latest .
+docker tag trader:latest stocktradersjilv2/trader:latest
+docker push stocktradersjilv2/trader:latest
 ```

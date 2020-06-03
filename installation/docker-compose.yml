@@ -19,7 +19,7 @@ services:
    - '9376:9376'
   restart: unless-stopped
  stock-quote:
-  image: stocktraders/stock-quote:latest
+  image: stocktradersjilv2/stock-quote:latest
   ports:
    - '9078:9080'
    - '9441:9443'
@@ -32,7 +32,7 @@ services:
    - redis
   restart: unless-stopped
  portfolio:
-  image: stocktrader/portfolio
+  image: stocktradersjilv2/portfolio
   ports:
    - '9079:9080'
    - '9442:9443'
@@ -47,7 +47,6 @@ services:
    - JDBC_PASSWORD=db2inst1
    - ODM_URL=http://odm:9060/DecisionService/rest/ICP_Trader_Dev_1/determineLoyalty
    - STOCK_QUOTE_URL=http://stock-quote:9080/stock-quote
-   - WATSON_PWD=empty
    - MQ_USR=user
    - MQ_PWD=bitnami
    - MQ_VIRTUAL_HOST=/
@@ -59,7 +58,7 @@ services:
    - stock-quote
   restart: unless-stopped
  trader:
-  image: ibmstocktrader/trader:latest
+  image: stocktradersjilv2/trader:latest
   ports:
    - '9080:9080'
    - '9443:9443'

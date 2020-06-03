@@ -59,9 +59,9 @@ To build `portfolio` clone this repo and run:
 ```bash
 cd stocktrader-jil-v2/src/portfolio/
 mvn package
-docker build -t portfolio:latest -t stocktraders/portfolio:latest .
-docker tag portfolio:latest stocktraders/portfolio:latest
-docker push stocktraders/portfolio:latest
+docker build -t portfolio:latest -t stocktradersjilv2/portfolio:latest .
+docker tag portfolio:latest stocktradersjilv2/portfolio:latest
+docker push stocktradersjilv2/portfolio:latest
 ```
 
 ### Include below enviroment variables for configuration
