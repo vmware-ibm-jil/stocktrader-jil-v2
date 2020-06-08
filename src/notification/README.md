@@ -34,8 +34,8 @@ The application/container expects the following environment variables to be popu
 
 
 ## Deployment
- - clone this repo
- - Go to directory `cd stocktrader-jil-v2\src\notification\mainifest` 
+ - Clone this repo
+ - Go to directory `cd stocktrader-jil-v2\src\notification\manifest` 
  - Create secrets for RabbitMQ and IBM Cloud Push services details:
 
 ```bash
