@@ -1,0 +1,15 @@
+#Deploy the autoscaler
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: tradr
+  labels:
+    solution: stock-trader
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: tradr
+  maxReplicas: 10
+  minReplicas: 1
+  targetCPUUtilizationPercentage: 50
