@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<html lang="en" class="no-js">
+
+<head>
+  <link rel="shortcut icon" href="favicon.ico">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- <link rel="manifest" href="manifest.json"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Push Notification</title>
+  <!-- Bootstrap -->
+  <script src="./js/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+  <script src="./js/popper.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/style.css" crossorigin="anonymous">
+  <script src="./js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body onload="init();">
+  <header>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">
+        <img src="images/vmware.png" width="26px" height="16px">
+        VMware
+      </a>
+      <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu"
+        aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="#">
+            <svg class=" mr-2 bi bi-arrow-repeat" width="20px" height="20px" viewBox="0 0 16 16" fill="white"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z" />
+              <path fill-rule="evenodd"
+                d="M8 3a4.995 4.995 0 0 0-4.192 2.273.5.5 0 0 1-.837-.546A6 6 0 0 1 14 8a.5.5 0 0 1-1.001 0 5 5 0 0 0-5-5zM2.5 7.5A.5.5 0 0 1 3 8a5 5 0 0 0 9.192 2.727.5.5 0 1 1 .837.546A6 6 0 0 1 2 8a.5.5 0 0 1 .501-.5z" />
+            </svg>
+            <svg class="bi bi-bell" width="20px" height="20px" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z" />
+              <path fill-rule="evenodd"
+                d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
+            </svg>
+            <span style="color: white;" id="notificationCount"></span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="sidebar-sticky pt-3">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                Notifications
+              </a>
+            </li>
+          </ul>
+          <hr />
+          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>Quick links</span>
+          </h6>
+          <ul class="nav flex-column">
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="#">
+                <svg class="bi bi-chat" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z" />
+                </svg>
+                &nbsp;Subscribe
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <svg class="bi bi-file-minus" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M9 1H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8h-1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h5V1z" />
+                  <path fill-rule="evenodd" d="M11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
+                </svg>
+                &nbsp;Unsubscribe
+              </a>
+            </li> -->
+            <li class="nav-item">
+              <!-- <hr /> -->
+              <a class="nav-link" href="#">
+                <svg class="bi bi-question-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                  <path
+                    d="M5.25 6.033h1.32c0-.781.458-1.384 1.36-1.384.685 0 1.313.343 1.313 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.007.463h1.307v-.355c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.326 0-2.786.647-2.754 2.533zm1.562 5.516c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+                </svg>
+                &nbsp;About
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mt-5">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Notifications</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="form-check mr-3 mt-1">
+              <input class="form-check-input" type="checkbox" value="true" id="showlogs">
+              <label class="form-check-label" for="showlogs">
+                show logs
+              </label>
+            </div>
+            <div class="btn-group1 mr-2">
+              <button type="button" class="mr-2 btn btn-sm btn-outline-primary" onclick="subscribe();">
+                <svg class="bi bi-chat" width="1em" height="1em" viewBox="0 0 16 16" fill="black" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z" />
+                </svg>
+                Subscribe
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="unsubscribe()">
+                <svg class="bi bi-file-minus" width="1em" height="1em" viewBox="0 0 16 16" fill="black" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M9 1H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8h-1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h5V1z" />
+                  <path fill-rule="evenodd" d="M11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z" />
+                </svg>
+                Unsubscribe
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-danger" onclick="clearlogs()">
+                <svg class="bi bi-trash2-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M2.037 3.225l1.684 10.104A2 2 0 0 0 5.694 15h4.612a2 2 0 0 0 1.973-1.671l1.684-10.104C13.627 4.224 11.085 5 8 5c-3.086 0-5.627-.776-5.963-1.775z" />
+                  <path fill-rule="evenodd"
+                    d="M12.9 3c-.18-.14-.497-.307-.974-.466C10.967 2.214 9.58 2 8 2s-2.968.215-3.926.534c-.477.16-.795.327-.975.466.18.14.498.307.975.466C5.032 3.786 6.42 4 8 4s2.967-.215 3.926-.534c.477-.16.795-.327.975-.466zM8 5c3.314 0 6-.895 6-2s-2.686-2-6-2-6 .895-6 2 2.686 2 6 2z" />
+                </svg>
+                Clear logs
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="" id="notifications">
+          <div class="alert alert-warning alert-dismissible fade show" id="defaultNotification" role="alert">
+            <strong>Notification: </strong> No notification received, Kindly subscribe to receive logs.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <h3 class="h3 border-bottom pb-2">Logs</h3>
+        <div class="" id="logs">
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="BMSPushSDK.js"></script>
+  <!-- <script src="BMSPushSDK.js" async></script> -->
+  <!-- <script src="BMSPushServiceWorker.js" async></script> -->
+  <script>
+    /*  if ('serviceWorker' in navigator) {
+       navigator.serviceWorker.register('/BMSPushServiceWorker.js', {
+         scope: '/'
+       }).then(function (registration) {
+         var serviceWorker;
+         if (registration.installing) {
+           serviceWorker = registration.installing;
+           registration.installing.postMessage("Howdy from your installing page.");
+           // document.querySelector('#kind').textContent = 'installing';
+         } else if (registration.waiting) {
+           serviceWorker = registration.waiting;
+           // document.querySelector('#kind').textContent = 'waiting';
+         } else if (registration.active) {
+           serviceWorker = registration.active;
+           registration.active.postMessage("Howdy from your installing page.");
+           // document.querySelector('#kind').textContent = 'active';
+         }
+         if (serviceWorker) {
+           serviceWorker.addEventListener('statechange', function (e) {
+             console.log(e);
+           });
+         }
+       }).catch(function (error) {
+       });
+     } else {
+     } */
+  </script>
+  <script>
+    function appendlogs(texttype, text) {
+      let type = texttype || 'warning';
+      let islogEnabled = $('#showlogs').is(":checked");
+      if (islogEnabled == true && text) {
+        if (typeof text != 'string') {
+          text = JSON.stringify(text);
+        }
+        $('#logs').append(
+          '<div style="word-wrap: break-word;" class="alert alert-' + type + ' alert-dismissible fade show m-1 p-1" role="alert">' +
+          '      <strong>' + type + ': </strong> ' + text +
+          '      <button type="button" class="close m-0 p-0 mr-2" data-dismiss="alert" aria-label="Close">' +
+          '        <span aria-hidden="true">&times;</span>' +
+          '      </button>' +
+          '    </div>'
+        );
+      }
+    }
+    var notificationCount = 0;
+    $('#notificationCount').text(notificationCount);
+    function appendNotification(texttype, text) {
+      let type = texttype || 'warning';
+      $('#defaultNotification').remove();
+      notificationCount++;
+      $('#notificationCount').text(notificationCount);
+      if (text) {
+        text = JSON.parse(text.replace('msgEventSeen:', '')).alert;
+        if (typeof text != 'string') {
+          text = JSON.stringify(text);
+        }
+        $('#notifications').append(
+          '<div style="word-wrap: break-word;" class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' +
+          '      <strong>' + type + ': </strong> ' + text +
+          '      <strong> at:' + (new Date()).toDateString() + ' ' + (new Date()).toLocaleTimeString() + ': </strong> ' +
+          '      <button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+          '        <span aria-hidden="true">&times;</span>' +
+          '      </button>' +
+          '    </div>'
+        );
+      }
+    }
+    tagsArray = [];
+    function init() {
+      bmsPush = new BMSPush()
+      bmsPush.isDebugEnable(true);
+      function callback(response) {
+        console.log(response.response);
+        if (typeof appendlogs === "function") {
+          appendlogs('info', response.response);
+        }
+      }
+/*       var initParams = {
+        "appGUID": process.env.APP_GUI_ID,
+        "appRegion": process.env.REGION,
+        "clientSecret": process.env.CLIENT_SECRET,
+        "applicationServerKey": process.env.APP_SERVER_OR_WEB_PUSH_KEY
+      } */
+      var initParams = {
+        "appGUID": "77955822-7290-4cd9-b80a-3091b6892fe8",
+        "appRegion": "imfpush.us-east.bluemix.net",
+        "clientSecret": "b8cce76c-6c8e-47b1-9241-fa71eb5c0fda",
+        "applicationServerKey": "BP6CiXS9cH2Vo12RP4_xa8Ge0y3It0akqQIlx3mCv3JtjROK7wi460dzylhudCrlSBsVL9B3_YJ-hiYP0yCOwMg"
+      }
+
+      //Initialize Push
+      bmsPush.initialize(initParams, callback);
+    }
+    function subscribe() {
+      //Register Push
+      bmsPush.register(function (response) {
+        console.log(response.response);
+        if (typeof appendlogs === "function") {
+          appendlogs('info', response.response);
+        }
+        bmsPush.retrieveAvailableTags(function (response) {
+          var jsonResponse = JSON.parse(response.response)
+          tagsArray = []
+          for (i in jsonResponse.tags) {
+            tagsArray.push(jsonResponse.tags[i].name)
+          }
+          console.log(tagsArray);
+          if (typeof appendlogs === "function") {
+            appendlogs('info', tagsArray);
+          }
+          bmsPush.subscribe(tagsArray, function (response) {
+            console.log(response.response)
+            if (typeof appendlogs === "function") {
+              appendlogs('info', response.response);
+            }
+          });
+        })
+      });
+
+      /* bmsPush.retrieveSubscriptions(function (response) {
+        console.log(response.response);
+      }); */
+    }
+
+    function unsubscribe() {
+      //Unsubscribe From tags
+      console.log(tagsArray);
+      bmsPush.unSubscribe((tagsArray.length > 0 ? tagsArray : ["Notifications-VJ"]), function (response) {
+        console.log(response.response)
+        if (typeof appendlogs === "function") {
+          appendlogs('info', response.response);
+        }
+        //delete registration From Push
+        bmsPush.unRegisterDevice(function (response) {
+          console.log(response.response)
+        })
+      });
+    }
+
+    function clearlogs() {
+      $('#logs').html('');
+    }
+  </script>
+
+
+</body>
+
+</html>

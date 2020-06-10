@@ -1,0 +1,7 @@
+{
+  "name": "ibm-push-vin",
+  "gcm_sender_id": "977479369323",
+  "permissions": [
+    "storage"
+  ]
+}

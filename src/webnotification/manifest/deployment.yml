@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webnotification
+  labels:
+    app: stock-trader
+  annotations:
+    prism.subkind: "Node.js"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webnotification
+      version: v1
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: webnotification
+        version: v1
+    spec:
+      containers:
+      - name: webnotification
+        image: stocktradersjilv2/webnotification:latest
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: APP_GUI_ID
+            valueFrom:
+              secretKeyRef:
+                name: ibmpushnotification
+                key: appguiid  
+          - name: CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: ibmpushnotification
+                key: clientsecret
+          - name: REGION
+            valueFrom:
+              secretKeyRef:
+                name: ibmpushnotification
+                key: region  
+          - name: TAG_NAME
+            valueFrom:
+              secretKeyRef:
+                name: ibmpushnotification
+                key: tag
+          - name: APP_SERVER_OR_WEB_PUSH_KEY
+            valueFrom:
+              secretKeyRef:
+                name: ibmpushnotification
+                key: serverwebkey                
+        ports:
+        - name: https
+          containerPort: 3001
+        resources:
+          requests:
+            cpu: 200m
+            memory: 300Mi
