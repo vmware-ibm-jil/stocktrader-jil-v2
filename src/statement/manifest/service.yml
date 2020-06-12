@@ -1,0 +1,17 @@
+#Deploy the service
+apiVersion: v1
+kind: Service
+metadata:
+  name: statement-service
+  labels:
+    app: statement
+    solution: stock-trader
+spec:
+  type: NodePort 
+  ports:
+    - port: 8080
+      nodePort: 31010
+      targetPort: 8080
+      name: https
+  selector:
+    app: statement

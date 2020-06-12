@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: statement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: statement
+      version: v1
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: statement
+        version: v1
+    spec:
+      containers:
+      - name: statement
+        image: stocktradersjilv2/statement:latest
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: MONGODB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: host
+          - name: MONGODB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: port
+          - name: MONGODB_DATABASE_NAME
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: database
+          - name: MONGODB_USER
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: user
+          - name: MONGODB_PWD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: password
+          - name: MONGODB_AUTH_DB
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: authenticationdb
+        resources:
+          requests:
+            cpu: 200m
+            memory: 300Mi
