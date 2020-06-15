@@ -127,6 +127,20 @@ app.post('/portfolio:star(*)', function(req, res) {
   });
 });
 
+app.put('/portfolio:star(*)', function(req, res) {
+  // return res.send(req.params);
+  console.log("url="+portfolio_url + req.path);
+  request.put({
+    url: portfolio_url + req.path,
+    headers: {
+      "Authorization": req.headers.authorization
+    },
+    params: req.params
+  }, function(error, response, body) {
+    return res.send(body);
+  });
+});
+
 app.delete('/portfolio:star(*)', function (req, res) {
   request.delete({
     url: portfolio_url + req.path,
