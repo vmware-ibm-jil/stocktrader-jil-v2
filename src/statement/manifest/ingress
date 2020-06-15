@@ -19,8 +19,8 @@ spec:
       - path: /trader/*
         backend:
           serviceName: statement-service
-          servicePort: 8080
+          servicePort: 8443
       - path: /trader
         backend:
           serviceName: statement-service
-          servicePort: 8080
+          servicePort: 8443
