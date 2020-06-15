@@ -39,6 +39,7 @@ var token_url = process.env.OIDC_TOKEN;
 var issuer_id = process.env.OIDC_ISSUER;
 var trader_url = process.env.TRADER_HOST || "https://172.17.76.29:9443";
 var portfolio_url = process.env.PORTFOLIO_HOST || "https://172.17.76.29:9442";
+var statement_url = process.env.STATEMENT_HOST || "http://172.17.76.32:31010";
 
 //TODO this needs to become a kube environment variable or secret
 var callback_url = 'https://'+process.env.PROXY_HOST+'/tradr/auth/sso/callback';
@@ -137,6 +138,17 @@ app.delete('/portfolio:star(*)', function (req, res) {
     return res.send(body);
   });
 });
+
+app.get('/trader/statement:star(*)', function (req, res) {
+  request.get({
+    url: statement_url + req.path,
+    params: req.params,
+    responseType: 'blob'
+  }, function (error, response, body) {
+    return res.send(body);
+  });
+});
+
 /* app.get('/tradr/user:star(*)', function(req, res) {
   request.get({
     url: trader_url + '/tradr/user',

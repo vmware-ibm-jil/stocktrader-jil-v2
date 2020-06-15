@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: tradr
-        image: tradr:only-node
+        image: stocktradersjilv2/tradr:latest
         imagePullPolicy: IfNotPresent
         env:
           - name: JWT_ISSUER
