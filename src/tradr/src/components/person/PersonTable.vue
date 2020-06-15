@@ -39,6 +39,7 @@
                 Feedback</hc-button>
             </div>
             <div class="box--1 box--vertical-center">
+              <hc-button class="js-modal" data-modal-target="Statement" hc-style="secondary">Download Statement</hc-button>
               <hc-button class="js-modal" data-modal-target="Sell" hc-style="secondary">Sell Stock</hc-button>
               <hc-button class="js-modal" data-modal-target="Buy" hc-style="primary">Buy Stock</hc-button>
             </div>
@@ -49,6 +50,7 @@
       <stocks v-bind:portfolioData=data></stocks>
       </tbody>
     </table>
+    <action-modal action="statement" :portfolio="data" hcName="Statement" :hcTitle="'Statement stocks for '+ data.owner"></action-modal>
     <action-modal action="buy" :portfolio="data" hcName="Buy" :hcTitle="'Buy stocks for '+ data.owner"></action-modal>
     <action-modal action="sell" :portfolio="data" hcName="Sell" :hcTitle="'Sell stocks for '+ data.owner"></action-modal>
     <feedback-modal :portfolio="data" hcName="Feedback" hcTitle="Send Feedback"></feedback-modal>

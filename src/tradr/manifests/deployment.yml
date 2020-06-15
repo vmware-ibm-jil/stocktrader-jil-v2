@@ -61,6 +61,11 @@ spec:
               secretKeyRef:
                 name: trader-host
                 key: host
+          - name: STATEMENT_HOST
+            valueFrom:
+              secretKeyRef:
+                name: statement-host
+                key: host
         ports:
         - name: https
           containerPort: 3000
