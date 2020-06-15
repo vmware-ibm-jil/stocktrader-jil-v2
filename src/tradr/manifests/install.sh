@@ -2,6 +2,7 @@ AUDIENCE=stock-trader
 ISSUER=http://stock-trader.ibm.com
 TRADER_HOST=https://172.17.76.29:9443
 PORTFOLIO_HOST=https://172.17.76.29:9442
+STATEMENT_HOST=https://172.17.76.32:31010
 INGRESS_HOST=https://172.17.76.32:3000   # tradr application host or localhost
 
 # add new secrets

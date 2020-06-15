@@ -23,10 +23,21 @@
             </hc-button>
             <h4 :id="`modal-title-${hcId}`" class="h2 modal-card__heading">{{ hcTitle }}</h4>
             <p :id="`modal-desc-${hcId}`" class="modal-card__content">
+              <template v-if="this.action == 'statement'">
+                <hc-text v-model="startDate" name="startDate" label="Start Date">{{ this.startDate }}</hc-text>
+                <hc-text v-model="endDate" name="endDate" label="End Date">{{ this.endDate }}</hc-text>
+              </template>
+              <template v-else>
                 <hc-text v-model="stockName" name="buyStock" label="Stock Name">IBM</hc-text>
                 <hc-text v-model="sharesNumber" name="buyShares" label="Shares"></hc-text>
+              </template>
             </p>
-            <hc-button hcStyle="primary" class="js-modal-focus js-close-modal" v-on:click="performAction">Ok</hc-button>
+            <template v-if="this.action == 'statement'">
+              <hc-button hcStyle="primary" class="js-modal-focus js-close-modal" v-on:click="performAction">Download</hc-button>
+            </template>
+            <template v-else>
+              <hc-button hcStyle="primary" class="js-modal-focus js-close-modal" v-on:click="performAction">Ok</hc-button>
+            </template>
             <hc-button class="js-close-modal" hcStyle="flat">Cancel</hc-button>
         </div>
     </div>
@@ -39,6 +50,7 @@
     import bus from '../bus'
     // REST project
     import axios from 'axios'
+    import downloadService from '../../services/downloadService';
 
     export default {
         name: 'action-modal',
@@ -68,6 +80,16 @@
             performAction() {
                 var config;
                 var params = new URLSearchParams();
+                if (this.action === 'statement') {
+                  params.append('startDate', this.startDate);
+                  params.append('endDate', this.endDate);
+                  downloadService.downloadFile(
+                    this.portfolio.owner,
+                    this.startDate,
+                    this.endDate,
+                    params
+                  );
+                }
                 if (this.action === 'buy') {
                     console.log(this.portfolio)
                     console.log("buying shares for " + this.portfolio.owner)
@@ -113,6 +135,7 @@
                     // the default value for minimumFractionDigits depends on the currency
                     // and is usually already 2
                 })
+                if (this.action !== 'statement') {
                 axios(config)
                     .then(response => {
                         console.log('here is the response')
@@ -124,6 +147,7 @@
                     .catch(e => {
                         console.log(e)
                     })
+                }
             }
         },
         data() {
@@ -135,7 +159,9 @@
                     sell: '',
                     delete: ''
                 },
-                updatedPortfolio: null
+                updatedPortfolio: null,
+                startDate: (new Date).getUTCDate() + '-' + ((new Date).getUTCMonth()) + '-' + (new Date).getUTCFullYear(),
+                endDate: (new Date).getUTCDate() + '-' + ((new Date).getUTCMonth() + 1) + '-' + (new Date).getUTCFullYear()
             }
         }
     }
