@@ -1,7 +1,4 @@
 # StockTraderJilv2 Installation:
- <p align="center">
-<img alt="StockTraderJilv2 Structure" src="StockTraderJilv2.PNG"/>
-</p>
 
 #### Deployment of IBM DB2 :
 
@@ -37,8 +34,8 @@
     docker-compose logs | grep –I ‘<Service-Name>’
     ```
 - Check the docker container status with “docker ps”
-- Now once all the services are up and running –Import and deploy  stocktrader-jil-v2/src/portfolio/stock-trader-loyalty-decision-service.zip on ODM (http://<Ubuntu-VM-IP>:9060) (odmAdmin /odmAdmin)
-- Now you can login to Trader UI with link (https://<Ubuntu-VM-IP>:9443/trader/login) (admin/admin)
+- Now once all the services are up and running –Import and deploy  stocktrader-jil-v2/src/portfolio/stock-trader-loyalty-decision-service.zip on ODM `http://<Ubuntu-VM-IP>:9060` (odmAdmin /odmAdmin)
+- Now you can login to Trader UI with link `https://<Ubuntu-VM-IP>:9443/trader/login` (admin/admin)
 
 #### Deploy notification service in OCP:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
