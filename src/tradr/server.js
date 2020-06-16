@@ -39,10 +39,10 @@ var token_url = process.env.OIDC_TOKEN;
 var issuer_id = process.env.OIDC_ISSUER;
 var trader_url = process.env.TRADER_HOST || "https://172.17.76.29:9443";
 var portfolio_url = process.env.PORTFOLIO_HOST || "https://172.17.76.29:9442";
-var statement_url = process.env.STATEMENT_HOST || "http://172.17.76.32:31010";
+var statement_url = process.env.STATEMENT_HOST || "https://172.17.76.32:31010";
 
 //TODO this needs to become a kube environment variable or secret
-var callback_url = 'https://'+process.env.PROXY_HOST+'/tradr/auth/sso/callback';
+var callback_url = 'https://' + process.env.PROXY_HOST + '/tradr/auth/sso/callback';
 
 var OpenIDConnectStrategy = require('passport-idaas-openidconnect').IDaaSOIDCStrategy;
 /* var Strategy = new OpenIDConnectStrategy({
@@ -76,45 +76,45 @@ app.set('view engine', 'jade')
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({resave: 'true', saveUninitialized: 'true' , secret: 'keyboard cat', maxAge: 3600000}));
+app.use(session({ resave: 'true', saveUninitialized: 'true', secret: 'keyboard cat', maxAge: 3600000 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/tradr/auth/sso/callback', function (req, res, next) {
-    var redirect_url = req.session.originalUrl;
-    // var redirect_url = '/#/';
-    console.log(req.session);
-    //console.log(req.session.passport.user.accessToken);
-    passport.authenticate('openidconnect', {
-        successRedirect: redirect_url,
-        failureRedirect: '/failure',
-    })(req, res, next);
+  var redirect_url = req.session.originalUrl;
+  // var redirect_url = '/#/';
+  console.log(req.session);
+  //console.log(req.session.passport.user.accessToken);
+  passport.authenticate('openidconnect', {
+    successRedirect: redirect_url,
+    failureRedirect: '/failure',
+  })(req, res, next);
 });
 
 app.get('/tradr/failure', function (req, res) {
-    console.log('login failed');
-    // res.send('login failed');
+  console.log('login failed');
+  // res.send('login failed');
 });
 
 app.get('/tradr/user', function (req, res) {
-    res.send({token: tokenGen.generateAccessToken(req.session.passport.user._json), session: req.session.passport});
-    //res.send(req.session.passport);
+  res.send({ token: tokenGen.generateAccessToken(req.session.passport.user._json), session: req.session.passport });
+  //res.send(req.session.passport);
 });
 
-app.get('/portfolio:star(*)', function(req, res) {
+app.get('/portfolio:star(*)', function (req, res) {
   request.get({
     url: portfolio_url + req.path,
     headers: {
       "Authorization": req.headers.authorization
     }
-  }, function(error, response, body) {
+  }, function (error, response, body) {
     return res.send(body);
   });
 });
 
-app.post('/portfolio:star(*)', function(req, res) {
+app.post('/portfolio:star(*)', function (req, res) {
   // return res.send(req.params);
   request.post({
     url: portfolio_url + req.path,
@@ -122,21 +122,20 @@ app.post('/portfolio:star(*)', function(req, res) {
       "Authorization": req.headers.authorization
     },
     params: req.params
-  }, function(error, response, body) {
+  }, function (error, response, body) {
     return res.send(body);
   });
 });
 
-app.put('/portfolio:star(*)', function(req, res) {
-  // return res.send(req.params);
-  console.log("url="+portfolio_url + req.path);
+app.put('/portfolio:star(*)', function (req, res) {
+  // return res.send(req.query);
+  // console.log("url="+portfolio_url + req.url);
   request.put({
-    url: portfolio_url + req.path,
+    url: portfolio_url + req.url,
     headers: {
       "Authorization": req.headers.authorization
-    },
-    params: req.params
-  }, function(error, response, body) {
+    }
+  }, function (error, response, body) {
     return res.send(body);
   });
 });
@@ -163,20 +162,7 @@ app.get('/trader/statement:star(*)', function (req, res) {
   });
 });
 
-/* app.get('/tradr/user:star(*)', function(req, res) {
-  request.get({
-    url: trader_url + '/tradr/user',
-    headers: {
-      "Authorization": req.headers.authorization
-    }
-  }, function(error, response, body) {
-    return res.send(body);
-  });
-}); */
-
-// app.get('/tradr/login', passport.authenticate('openidconnect', {}));
-app.post("/tradr/login", function(req, res) {
-  // console.log(trader_url + "/trader/login");
+app.post("/tradr/login", function (req, res) {
   request.post(
     {
       url: trader_url + "/trader/login",
@@ -187,7 +173,7 @@ app.post("/tradr/login", function(req, res) {
       // rejectUnauthorized: false,
       // strictSSL: false
     },
-    function(error, response) {
+    function (error, response) {
       console.log(error);
       console.log(response);
       if (!error && response.headers.location.indexOf("error") === -1) {
@@ -206,35 +192,33 @@ app.use('/tradr', ensureAuthenticated, express.static(path.join(__dirname, 'dist
 
 // Allow CORS
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 
 
 /***************************************************************/
 
 // Authentication
-
-
 function ensureAuthenticated(req, res, next) {
   // return res.send(JSON.stringify(req));
   return next();
-    // console.log(req.session);
-    var auth = req.headers
-    if (!req.headers.authorization) {
-        console.log('user not authenticated, logging in')
-        req.session.originalUrl = req.originalUrl;
-        res.redirect('/tradr/#/login');
-    } else {
-        console.log("user is authenticated");
-        return next();
-    }
+  // console.log(req.session);
+  var auth = req.headers
+  if (!req.headers.authorization) {
+    console.log('user not authenticated, logging in')
+    req.session.originalUrl = req.originalUrl;
+    res.redirect('/tradr/#/login');
+  } else {
+    console.log("user is authenticated");
+    return next();
+  }
 }
 
 app.get('/tradr/hello', ensureAuthenticated, function (req, res) {
-    console.log(req.session.passport.user.accessToken);
-    res.send('Hello, ' + req.user['id'] + '!');
+  console.log(req.session.passport.user.accessToken);
+  res.send('Hello, ' + req.user['id'] + '!');
 });
 
 passport.serializeUser((user, done) => done(null, user));
@@ -244,9 +228,9 @@ passport.deserializeUser((obj, done) => done(null, obj));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
 // error handlers
@@ -254,23 +238,23 @@ app.use(function (req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function (err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
+  app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
     });
+  });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    console.log({
-        message: err.message,
-        error: {}
-    });
+  res.status(err.status || 500);
+  console.log({
+    message: err.message,
+    error: {}
+  });
 });
 
 
