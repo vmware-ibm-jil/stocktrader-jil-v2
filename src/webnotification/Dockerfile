@@ -8,8 +8,8 @@ WORKDIR /usr/src/app
 RUN apk update && apk upgrade && apk add --no-cache git
 
 COPY package.json /usr/src/app/package.json
-#RUN npm install --no-optional
-RUN npm ci 
+RUN npm install --no-optional
+#RUN npm ci --only=production
 
 COPY . /usr/src/app/
 #RUN npm run build
