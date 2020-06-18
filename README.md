@@ -6,7 +6,7 @@
 - Install Docker on Ubuntu OS [link](https://docs.docker.com/engine/install/ubuntu/)
 - Run the following command to setup the containerized DB2:
     ```bash
-    $ sudo docker pull stocktraders/st-db2
+    $ sudo docker pull stocktradersjilv2/st-db2
     $ sudo docker run -itd --name mydb2 --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=db2inst1 -e DBNAME=STOCKTRD -v /data:/database stocktraders/st-db2
     $ sudo docker exec -ti mydb2 bash -c "su db2inst1"
     ```
@@ -23,6 +23,12 @@
 - Provision Ubuntu 16.04 VM
 - Install Docker Engine [link](https://docs.docker.com/engine/install/ubuntu/)
 - Install Docker compose [link](https://docs.docker.com/compose/install/)
+    ```bash
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+    #verify using the below command
+    docker-compose --version
+    ```
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd stocktrader-jil-v2\ installation
 - Execute the below Command to pull the required images and then start service deployments
