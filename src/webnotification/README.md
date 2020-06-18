@@ -4,6 +4,10 @@
 [IBM cloud push]: <https://cloud.ibm.com/docs/mobilepush?topic=mobilepush-getting-started>
 [SDK]: <https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-javascript-webpush>
 [firebase]: <https://console.firebase.google.com/>
+[serviceWorker]: <https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker>
+[PushManager]: <https://developer.mozilla.org/en-US/docs/Web/API/PushManager>
+[push api]: <https://developer.mozilla.org/en-US/docs/Web/API/Push_API>
+
 # IBM Cloud Push Web Notifications Node.js overview
 
 This Node.js web application based on the Express framework using IBM cloud push SDK to send notification
@@ -33,6 +37,10 @@ to chrome and firefox.
 
 ## Assumptions
 - Installation on https certificate enabled server. (Service worker supports https)
+- [PushManager] is enabled
+- [serviceWorker] is enabled
+- Firefox version equal or greater than 70+
+- Service workers (and Push) have been disabled in the Firefox 45, 52, 60, and 68 Extended Support Releases (ESR.) as per [push api]
 
 ## Installation
 update install.sh file to configure params variables.

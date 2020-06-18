@@ -152,14 +152,23 @@ app.delete('/portfolio:star(*)', function (req, res) {
   });
 });
 
-app.get('/trader/statement:star(*)', function (req, res) {
-  request.get({
-    url: statement_url + req.path,
-    params: req.params,
-    responseType: 'blob'
-  }, function (error, response, body) {
-    return res.send(body);
-  });
+// app.get('/trader/statement:star(*)', function (req, res) {
+//   res.download(statement_url + req.url, function(e) {
+//     return res.send(e);
+//   });
+// });
+
+app.get('/trader/statement/host', function (req, res) {
+  // console.log("url="+statement_url + req.url);
+  return res.send(statement_url);
+  // request.get({
+  //   url: statement_url + req.url,
+  //   headers: {
+  //     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+  //   }
+  // }, function (error, response, body) {
+  //   return res.send(body);
+  // });
 });
 
 app.post("/tradr/login", function (req, res) {
