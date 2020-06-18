@@ -11,9 +11,12 @@
     $ sudo docker exec -ti mydb2 bash -c "su db2inst1"
     ```
 - Verify the Image:
-    -   sudo docker exec -i -t mydb2 /bin/bash
-    -   su db2inst1
-    -   db2 connect to STOCKTRD user db2inst1 using db2inst
+    ```bash
+    
+    $ sudo docker exec -i -t mydb2 /bin/bash
+    $ su db2inst1
+    $ db2 connect to STOCKTRD user db2inst1 using db2inst1
+    ```
     -   Check the DB2 access from VM1 - Telnet port 50000
     -   Also can check the JDBC connection through eclipse plugin or Java program
 
@@ -40,7 +43,7 @@
     docker-compose logs | grep –I ‘<Service-Name>’
     ```
 - Check the docker container status with “docker ps”
-- Now once all the services are up and running –Import and deploy  stocktrader-jil-v2/src/portfolio/stock-trader-loyalty-decision-service.zip on ODM `http://<Ubuntu-VM-IP>:9060` (odmAdmin /odmAdmin)
+- Now once all the services are up and running –Import and deploy  stocktrader-jil-v2/src/portfolio/stock-trader-loyalty-decision-service.zip on ODM `http://<Ubuntu-VM-IP>:9060` (odmAdmin/odmAdmin)
 - Now you can login to Trader UI with link `https://<Ubuntu-VM-IP>:9443/trader/login` (admin/admin)
 
 ### Deploy notification service in OCP:
