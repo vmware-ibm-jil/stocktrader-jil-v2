@@ -166,3 +166,19 @@ helm install my-mongodb --set mongodbRootPassword=secretpassword,mongodbUsername
     kubectl apply -f service.yml
     kubectl apply -f Ingress.yml
     ```
+### Migration guidelines to cloud
+
+[above]: <https://github.com/vmware-ibm-jil/stocktrader-jil-v2#deployment-of-stock-trader-application-components>
+
+1. Static ip changes (if you does not see new ip for the VM)
+2. need to update docker-compose for configuration related to new IP
+3. go to installation directory.
+```sh
+docker-compose down
+```
+```sh
+docker-compose up -d 
+```
+4. wait until all container start, follow logs for any exceptions. docker-compose logs -f
+5. Import and deploy stocktrader-jil-v2/src/portfolio/stock-trader-loyalty-decision-service.zip on ODM (follow step [above])
+6. enter https://<Ubuntu-VM-IP>:9443/trader/login (follow step [above])
