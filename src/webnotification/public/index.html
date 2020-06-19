@@ -15,7 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Push Notification</title>
   <!-- Bootstrap -->
-  <script src="./js/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+  <script src="./js/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
   <script src="./js/popper.min.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./css/bootstrap.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.css" crossorigin="anonymous">
@@ -248,21 +248,29 @@
           appendlogs('info', response.response);
         }
       }
-/*       var initParams = {
-        "appGUID": process.env.APP_GUI_ID,
-        "appRegion": process.env.REGION,
-        "clientSecret": process.env.CLIENT_SECRET,
-        "applicationServerKey": process.env.APP_SERVER_OR_WEB_PUSH_KEY
-      } */
-      var initParams = {
-        "appGUID": "77955822-7290-4cd9-b80a-3091b6892fe8",
-        "appRegion": "imfpush.us-east.bluemix.net",
-        "clientSecret": "b8cce76c-6c8e-47b1-9241-fa71eb5c0fda",
-        "applicationServerKey": "BP6CiXS9cH2Vo12RP4_xa8Ge0y3It0akqQIlx3mCv3JtjROK7wi460dzylhudCrlSBsVL9B3_YJ-hiYP0yCOwMg"
-      }
-
-      //Initialize Push
-      bmsPush.initialize(initParams, callback);
+      $.getJSON({
+        url: '/config',
+        method: 'GET',
+        success: function (process) {
+          /* var initParams = {
+            "appGUID": "77955822-7290-4cd9-b80a-3091b6892fe8",
+            "appRegion": "imfpush.us-east.bluemix.net",
+            "clientSecret": "b8cce76c-6c8e-47b1-9241-fa71eb5c0fda",
+            "applicationServerKey": "BP6CiXS9cH2Vo12RP4_xa8Ge0y3It0akqQIlx3mCv3JtjROK7wi460dzylhudCrlSBsVL9B3_YJ-hiYP0yCOwMg"
+          } */
+          var initParams = {
+            "appGUID": process.env.APP_GUI_ID,
+            "appRegion": process.env.REGION,
+            "clientSecret": process.env.CLIENT_SECRET,
+            "applicationServerKey": process.env.APP_SERVER_OR_WEB_PUSH_KEY
+          }
+          //Initialize Push
+          bmsPush.initialize(initParams, callback);
+        },
+        error: function (e) {
+          appendlogs('info', e.message);
+        }
+      });
     }
     function subscribe() {
       //Register Push
