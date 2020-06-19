@@ -7,7 +7,7 @@
 - Run the following command to setup the containerized DB2:
     ```bash
     $ sudo docker pull stocktradersjilv2/st-db2
-    $ sudo docker run -itd --name mydb2 --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=db2inst1 -e DBNAME=STOCKTRD -v /data:/database stocktraders/st-db2
+    $ sudo docker run -itd --name mydb2 --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=db2inst1 -e DBNAME=STOCKTRD -v /data:/database stocktraders/st-db2 --restart unless-stopped
     $ sudo docker exec -ti mydb2 bash -c "su db2inst1"
     ```
 - Verify the Image:
