@@ -562,7 +562,7 @@ function BMSPush() {
                       if (res.status == 200 || res.status == 201) {
                         printLog('message status is reported');
                       } else {
-                        printLog('failure reporting message' + res.responseText);
+                        printLog('failure reporting message = ' + res.responseText);
                       }
                     },statusObj, null);
                   }

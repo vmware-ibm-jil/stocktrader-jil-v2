@@ -252,12 +252,6 @@
         url: '/config',
         method: 'GET',
         success: function (process) {
-          /* var initParams = {
-            "appGUID": "77955822-7290-4cd9-b80a-3091b6892fe8",
-            "appRegion": "imfpush.us-east.bluemix.net",
-            "clientSecret": "b8cce76c-6c8e-47b1-9241-fa71eb5c0fda",
-            "applicationServerKey": "BP6CiXS9cH2Vo12RP4_xa8Ge0y3It0akqQIlx3mCv3JtjROK7wi460dzylhudCrlSBsVL9B3_YJ-hiYP0yCOwMg"
-          } */
           var initParams = {
             "appGUID": process.env.APP_GUI_ID,
             "appRegion": process.env.REGION,
