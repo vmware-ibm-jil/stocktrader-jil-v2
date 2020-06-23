@@ -1,13 +1,13 @@
 # StockTraderJilv2 Installation:
 
-### Deployment of IBM DB2 :
+### 1. Deployment of IBM DB2 :
 
 - Provision one ubuntu-16.04 DB2 VM2 
 - Install Docker on Ubuntu OS [link](https://docs.docker.com/engine/install/ubuntu/)
 - Run the following command to setup the containerized DB2:
     ```bash
     $ sudo docker pull stocktradersjilv2/st-db2
-    $ sudo docker run -itd --name mydb2 --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=db2inst1 -e DBNAME=STOCKTRD -v /data:/database --restart unless-stopped stocktraders/st-db2
+    $ sudo docker run --restart unless-stopped -itd --name mydb2 --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=db2inst1 -e DBNAME=STOCKTRD -v /data:/database stocktraders/st-db2
     $ sudo docker exec -ti mydb2 bash -c "su db2inst1"
     ```
 - Verify the Image:
@@ -20,7 +20,7 @@
     -   Check the DB2 access from VM1 - Telnet port 50000
     -   Also can check the JDBC connection through eclipse plugin or Java program
 
-### Deployment of Stock Trader application components:
+### 2. Deployment of Stock Trader application components:
 
 - Prerequisite: DB2 VM is up and accessible
 - Provision Ubuntu 16.04 VM
@@ -46,7 +46,7 @@
 - Now once all the services are up and running –Import and deploy  stocktrader-jil-v2/src/portfolio/stock-trader-loyalty-decision-service.zip on ODM `http://<Ubuntu-VM-IP>:9060` (odmAdmin/odmAdmin)
 - Now you can login to Trader UI with link `https://<Ubuntu-VM-IP>:9443/trader/login` (admin/admin)
 
-### Deploy notification service in OCP:
+### 3. Deploy notification service in OCP:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd stocktrader-jil-v2\src\notification\manifest
 - Create secrets for RabbitMQ and IBM Cloud Push services details:
@@ -58,10 +58,10 @@
 - Create or use the  project exits - oc new-project stocktrader or oc project stocktrader
 - Apply the manifest file kubectl apply -f deployment.yml
 
-### Steps to install RabbitMQ using helm:
+### 4. Steps to install RabbitMQ using helm:
 - Use curl command as mentioned below to create a get_helm.sh file to install helm.
     ```bash
-    curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get-helm-3 > get_helm.sh"statement
+    curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get-helm-3 > get_helm.sh
     ```
 - Get read, write and execute permission for the file "get_helm.sh" using the following command
     ```bash
@@ -96,11 +96,11 @@
     echo "URL : http://$NODE_IP:$NODE_PORT_STATS/"
     ```
 
-### Steps to install Install MongoDB using helm:
+### 5. Steps to install MongoDB using helm:
 ##### If helm is not yet installed, use the following steps to install helm:
 - Use curl command as mentioned below to create a get_helm.sh file to install helm.
     ```bash
-    curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get-helm-3 > get_helm.sh"statement
+    curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get-helm-3 > get_helm.sh
     ```
 - Get read, write and execute permission for the file "get_helm.sh" using the following command
     ```bash
@@ -117,7 +117,7 @@
 helm install my-mongodb --set mongodbRootPassword=secretpassword,mongodbUsername=my-user,mongodbPassword=my-password,mongodbDatabase=my-database,service.nodePort=32008,service.type=NodePort bitnami/mongodb
 ``` 
 
-### Deploy Statement service in OCP
+### 6. Deploy Statement service in OCP
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd stocktrader-jil-v2\src\statement\manifest
 - Create secrets for MongoDB and Host details:
@@ -131,7 +131,7 @@ helm install my-mongodb --set mongodbRootPassword=secretpassword,mongodbUsername
     kubectl apply -f ingress.yml
     ``` 
 
-### Deploy Web notification in ocp:
+### 7. Deploy Web notification in ocp:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd stocktrader-jil-v2\src\webnotification\manifest
 - Get the value of APPGUIID, CLIENTSECRET, REGION, TAG, SERVERWEBKEY
@@ -145,7 +145,14 @@ helm install my-mongodb --set mongodbRootPassword=secretpassword,mongodbUsername
     kubectl apply -f service.yml
     kubectl apply -f Ingress.yml
     ``` 
-### Deploy new Tradr in ocp:
+- Set external IP to expose to host machine.
+    ```bash
+    expose
+    ```
+    ```bash
+    patch
+    ```
+### 8. Deploy new Tradr in ocp:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd stocktrader-jil-v2\src\tradr\manifests
 - Get the value of AUDIENCE, ISSUER, TRADER_HOST, PORTFOLIO_HOST, STATEMENT_HOST, INGRESS_HOST.
@@ -166,7 +173,14 @@ helm install my-mongodb --set mongodbRootPassword=secretpassword,mongodbUsername
     kubectl apply -f service.yml
     kubectl apply -f Ingress.yml
     ```
-### Migration guidelines to cloud
+- Set external IP to expose to host machine.
+    ```bash
+    oc expose service <service-name>
+    ```
+    ```bash
+    oc patch svc <name> -p '{"spec":{"externalIPs":["<ip_address>"]}}'
+    ```
+### 9. Migration guidelines to cloud
 
 [above]: <https://github.com/vmware-ibm-jil/stocktrader-jil-v2#deployment-of-stock-trader-application-components>
 
