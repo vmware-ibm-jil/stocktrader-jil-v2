@@ -122,7 +122,8 @@ helm install my-mongodb --set mongodbRootPassword=secretpassword,mongodbUsername
 - Go to directory cd stocktrader-jil-v2\src\statement\manifest
 - Create secrets for MongoDB and Host details:
     ```bash
-    kubectl create secret generic mongodb --from-literal=user=admin --from-literal=password=secretpassword --from-literal=host=172.17.76.32 --from-literal=port=32008 --from-literal=database=stocktrader --from-literal=authenticationdb=admin
+    # NOTE : We will need to use "root" user for mongoDB and the authenticationdb should always be "admin"
+    kubectl create secret generic mongodb --from-literal=user=root --from-literal=password=secretpassword --from-literal=host=172.17.76.32 --from-literal=port=32008 --from-literal=database=stocktrader --from-literal=authenticationdb=admin
     ``` 
 - Apply the manifest files :
     ```bash
