@@ -40,7 +40,7 @@
     ```
 - You can check the logs of the services with below command using service name for(odm/trader/redis/stock-quote/portfolio)
     ```bash
-    docker-compose logs | grep –I ‘<Service-Name>’
+    docker-compose logs | grep –i ‘<Service-Name>’
     ```
 - Check the docker container status with “docker ps”
 - Now once all the services are up and running –Import and deploy  stocktrader-jil-v2/src/portfolio/stock-trader-loyalty-decision-service.zip on ODM `http://<Ubuntu-VM-IP>:9060` (odmAdmin/odmAdmin)
@@ -51,7 +51,7 @@
 - Go to directory cd stocktrader-jil-v2\src\notification\manifest
 - Create secrets for RabbitMQ and IBM Cloud Push services details:
     ```bash
-    kubectl create secret generic rbq --from-literal=user=admin --from-literal=password=secretpassword --from-literal=vhost=/ --from-literal=host=172.17.76.32 --from-literal=port=32004 --from-literal=queue=stocktrader 
+    kubectl create secret generic rbq --from-literal=user=admin --from-literal=password=secretpassword -from-literal=vhost=/ --from-literal=host=172.17.76.32 --from-literal=port=32004 --from-literal=queue=stocktrader
 
     kubectl create secret generic ibmcloudpush --from-literal=tenenatid=77955822-7290-4cd9-b80a-3091b6892fee --from-literal=apikey=52XE_c9OkJJ6NfHDjTXxrYWcUUph86mwOLIZXyGlY2aq  --from-literal=region=.us-east.bluemix.net --from-literal=tag=STOCKTRADERS --from-literal=alertmsgurl=www.ibm.com
     ```
@@ -122,7 +122,7 @@ helm install my-mongodb --set mongodbRootPassword=secretpassword,mongodbUsername
 - Go to directory cd stocktrader-jil-v2\src\statement\manifest
 - Create secrets for MongoDB and Host details:
     ```bash
-    kubectl create secret generic mongodb --from-literal=user=admin --from-literal=password=secretpassword	--from-literal=host=172.17.76.32 --from-literal=port=32008 --from-literal=database=stocktrader --from-		literal=authenticationdb=admin
+    kubectl create secret generic mongodb --from-literal=user=admin --from-literal=password=secretpassword --from-literal=host=172.17.76.32 --from-literal=port=32008 --from-literal=database=stocktrader --from-literal=authenticationdb=admin
     ``` 
 - Apply the manifest files :
     ```bash
