@@ -1,3 +1,10 @@
+
+[Tradr]: <https://github.com/vindby23/stocktrader-jil-v2/tree/master/src/tradr>
+[IBM cloud]: <https://cloud.ibm.com>
+[IBM cloud push]: <https://cloud.ibm.com/docs/mobilepush?topic=mobilepush-getting-started>
+[SDK]: <https://github.com/ibm-bluemix-mobile-services/bms-clientsdk-javascript-webpush>
+[firebase]: <https://console.firebase.google.com/>
+
 ## Notification Service
 Notification service for Stock Trader application will subscribe to RabbitMq for the messages sent from the Portfolio service, when user perfroms the operations like 
 * Create Portfolio
