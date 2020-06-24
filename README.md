@@ -187,7 +187,7 @@ helm install my-mongodb --set mongodbRootPassword=secretpassword,mongodbUsername
 
 1. While the VMs are migrated to cloud the VMs will recieve new IPs. So, some static ip changes will be needed in the docker-compose file.
 2. Update the "JDBC_HOST" IP and "MQ_HOST_NAME" IP in the docker-compose file under "service -> portfolio -> environment"
-3. go to installation directory.
+3. Go to directory cd [stocktrader-jil-v2\ installation](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/installation)
 ```sh
 docker-compose down
 ```
