@@ -5,6 +5,29 @@ Notification service for Stock Trader application will subscribe to RabbitMq for
 * Delete Portfolio
 Then the notification service will publish these message to IBM cloud push notification service.
 
+## Prerequisites
+1. openshift/Minikube or any server with kubernet and docker pre-installed.
+1. New [Tradr] application needs to up and running.
+1. Register to [IBM cloud] and select appropriate account type
+	1. create **tag**, **service credentials** and **configure services** for firefox/chrome/safari
+	1. [IBM cloud push] getting started.
+	For more information configuring [SDK]
+1. Open google [firebase] account for the VAPID.
+	1. Go to cloud messaging settings and get server/web push key and sender ID.
+1. SDK require initialization params which you can get from the IBM cloud services as follows
+	1. appGUID
+	`# Example: 2334544-7290-4cd9-b80a-3091b6892fe8`
+	
+	1. appRegion
+	`# Example: imfpush.us-east.bluemix.net`
+	
+	1. clientSecret
+	`# Example: 34cd334-6c8e-47b1-9241-fa71eb5c0fda`
+	
+	1. applicationServerKey (Either web push key or server key)
+	`# Example: FBP6CiXS9cH2V2o12RP4_xa8Ge0yw3It04akqQIlx3mCv3JtjROK7wi460d1zylshudCrlSBsVL9B3_YJ-hiYP0yCOwMg`
+
+
 ## Building
 
 `mvn clean install` To package and create application executable jar
