@@ -33,7 +33,7 @@
     docker-compose --version
     ```
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
-- Go to directory cd stocktrader-jil-v2\ installation
+- Go to directory cd [stocktrader-jil-v2\ installation](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/installation)
 - Execute the below Command to pull the required images and then start service deployments
     ```bash
     COMPOSE_HTTP_TIMEOUT=300 docker-compose up -d
@@ -48,7 +48,7 @@
 
 ### 3. Deploy notification service in OCP:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
-- Go to directory cd stocktrader-jil-v2\src\notification\manifest
+- Go to directory cd [stocktrader-jil-v2\src\notification](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/notification)\manifest
 - Create secrets for RabbitMQ and IBM Cloud Push services details:
     ```bash
     kubectl create secret generic rbq --from-literal=user=admin --from-literal=password=secretpassword -from-literal=vhost=/ --from-literal=host=172.17.76.32 --from-literal=port=32004 --from-literal=queue=stocktrader
@@ -119,7 +119,7 @@ helm install my-mongodb --set mongodbRootPassword=secretpassword,mongodbUsername
 
 ### 6. Deploy Statement service in OCP
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
-- Go to directory cd stocktrader-jil-v2\src\statement\manifest
+- Go to directory cd [stocktrader-jil-v2\src\statement](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/statement)\manifest
 - Create secrets for MongoDB and Host details:
     ```bash
     # NOTE : We will need to use "root" user for mongoDB and the authenticationdb should always be "admin"
@@ -134,7 +134,7 @@ helm install my-mongodb --set mongodbRootPassword=secretpassword,mongodbUsername
 
 ### 7. Deploy Web notification in ocp:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
-- Go to directory cd stocktrader-jil-v2\src\webnotification\manifest
+- Go to directory cd [stocktrader-jil-v2\src\webnotification](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/webnotification)\manifest
 - Get the value of APPGUIID, CLIENTSECRET, REGION, TAG, SERVERWEBKEY
 - Create secret using following command
     ```bash
@@ -155,7 +155,7 @@ helm install my-mongodb --set mongodbRootPassword=secretpassword,mongodbUsername
     ```
 ### 8. Deploy new Tradr in ocp:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
-- Go to directory cd stocktrader-jil-v2\src\tradr\manifests
+- Go to directory cd [stocktrader-jil-v2\src\tradr](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/tradr)\manifests
 - Get the value of AUDIENCE, ISSUER, TRADER_HOST, PORTFOLIO_HOST, STATEMENT_HOST, INGRESS_HOST.
 - Create secret using following commands
     ```bash
@@ -185,9 +185,9 @@ helm install my-mongodb --set mongodbRootPassword=secretpassword,mongodbUsername
 
 [above]: <https://github.com/vmware-ibm-jil/stocktrader-jil-v2#deployment-of-stock-trader-application-components>
 
-1. Static ip changes (if you does not see new ip for the VM)
-2. need to update docker-compose for configuration related to new IP
-3. go to installation directory.
+1. While the VMs are migrated to cloud the VMs will recieve new IPs. So, some static ip changes will be needed in the docker-compose file.
+2. Update the "JDBC_HOST" IP and "MQ_HOST_NAME" IP in the docker-compose file under "service -> portfolio -> environment"
+3. Go to directory cd [stocktrader-jil-v2\ installation](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/installation)
 ```sh
 docker-compose down
 ```
