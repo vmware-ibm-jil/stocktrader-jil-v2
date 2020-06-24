@@ -74,7 +74,8 @@
     ``` 
 - Now use the following command to install rabbitMQ using helm.
     ```bash
-    helm install my-release --set rabbitmq.username=admin,rabbitmq.password=secretpassword,persistence.enabled=false,service.nodePort=32004,service.nodeTlsPort=32005,service.type=NodePort bitnami/rabbitmq
+    helm install my-release-vj --set rabbitmq.username=admin,rabbitmq.password=secretpassword,persistence.enabled=false,service.nodePort=32010,service.nodeTlsPort=32005,service.type=NodePort,podScurityContext.enabled=false bitnami/rabbitmq --namespace stocktrader
+
     ``` 
     or  (If the statefulset-controller gives error, we can disable it)
     ```bash
