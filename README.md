@@ -74,12 +74,12 @@
     ``` 
 - Now use the following command to install rabbitMQ using helm.
     ```bash
-    helm install my-release-vj --set rabbitmq.username=admin,rabbitmq.password=secretpassword,persistence.enabled=false,service.nodePort=32010,service.nodeTlsPort=32005,service.type=NodePort,podScurityContext.enabled=false bitnami/rabbitmq --namespace stocktrader
+    helm install my-release-vj --set rabbitmq.username=admin,rabbitmq.password=secretpassword,persistence.enabled=false,service.nodePort=32010,service.nodeTlsPort=32005,service.type=NodePort,podScurityContext.enabled=false bitnami/rabbitmq --namespace stocktrader --version 6.25.13
 
     ``` 
     or  (If the statefulset-controller gives error, we can disable it)
     ```bash
-    helm install my-release --set rabbitmq.username=admin,rabbitmq.password=secretpassword,persistence.enabled=false,service.nodePort=32004,service.nodeTlsPort=32005,service.type=NodePort,securityContext.enabled=false bitnami/rabbitmq --namespace stocktrader
+    helm install my-release --set rabbitmq.username=admin,rabbitmq.password=secretpassword,persistence.enabled=false,service.nodePort=32004,service.nodeTlsPort=32005,service.type=NodePort,securityContext.enabled=false bitnami/rabbitmq --namespace stocktrader --version 6.25.13
     ```
 ##### Below are some important commands:
 - To obtain the NodePort IP and Ports:
