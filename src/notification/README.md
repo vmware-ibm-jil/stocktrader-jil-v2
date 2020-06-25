@@ -74,3 +74,13 @@ kubectl create secret generic rbq --from-literal=user=admin --from-literal=passw
 kubectl create secret generic ibmcloudpush --from-literal=tenenatid=77955822-7290-4cd9-b80a-3091b6892fee --from-literal=apikey=52XE_c9OkJJ6NfHDjTXxrYWcUUph86mwOLIZXyGlY2aq  --from-literal=region=.us-east.bluemix.net --from-literal=tag=STOCKTRADERS --from-literal=alertmsgurl=www.ibm.com
 ```
  - Apply the mainifest file `kubectl apply -f deployment.yml`
+
+**Note:** Make sure internet connectivity should be there in the pod
+```sh
+ping  iam.us-east.bluemix.net # from inside pod
+```
+if above command does not work then apply pod.yml file.
+```sh
+kubectl apply -f pod.yml
+```
+

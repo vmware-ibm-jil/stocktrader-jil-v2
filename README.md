@@ -60,6 +60,15 @@
 - Create or use the  project exits - oc new-project stocktrader or oc project stocktrader
 - Apply the manifest file kubectl apply -f deployment.yml
 
+**Note:** Make sure internet connectivity should be there in the pod
+```sh
+ping  iam.us-east.bluemix.net # from inside pod
+```
+if above command does not work then apply pod.yml file.
+```sh
+kubectl apply -f pod.yml
+```
+
 **for more details follow notification [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/notification)**
 
 ### 4. Steps to install RabbitMQ using helm:
@@ -141,6 +150,18 @@ sudo docker run -d --name=my-mongodb -e MONGODB_ROOT_PASSWORD=secretpassword -e 
     kubectl apply -f service.yml
     kubectl apply -f ingress.yml
     ``` 
+**Note:** For app LauchPad Mongo Intance
+- Open port by running 
+```sh
+sudo ufw allow <PORT>
+```
+- enable ssh connection
+```sh
+rm -f /etc/ssh/sshd_not_to_be_run
+systemctl start ssh
+systemctl status ssh
+```
+- Try remote login to mongo db from outside the VM.
 
 **for more details follow statement service [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/statement)**
 
