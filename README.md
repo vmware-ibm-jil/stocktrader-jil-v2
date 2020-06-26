@@ -1,6 +1,9 @@
 # StockTraderJilv2 Installation:
 
-### 1. Deployment of IBM DB2 :
+## Table Of Contens : 
+- [Steps to install MongoDB using helm](#steps-to-install-mongodb-using-helm)
+
+### Deployment of IBM DB2 :
 
 - Provision one ubuntu-16.04 DB2 VM2 
 - Install Docker on Ubuntu OS [link](https://docs.docker.com/engine/install/ubuntu/)
@@ -20,7 +23,7 @@
     -   Check the DB2 access from VM1 - Telnet port 50000
     -   Also can check the JDBC connection through eclipse plugin or Java program
 
-### 2. Deployment of Stock Trader application components:
+### Deployment of Stock Trader application components:
 
 - Prerequisite: DB2 VM is up and accessible
 - Provision Ubuntu 16.04 VM
@@ -48,7 +51,7 @@
 
 **for more details follow portfolio [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/portfolio)**
 
-### 3. Deploy notification service in OCP:
+### Deploy notification service in OCP:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd [stocktrader-jil-v2\src\notification](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/notification)\manifest
 - Create secrets for RabbitMQ and IBM Cloud Push services details:
@@ -71,7 +74,7 @@ kubectl apply -f pod.yml
 
 **for more details follow notification [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/notification)**
 
-### 4. Steps to install RabbitMQ using helm:
+### Steps to install RabbitMQ using helm:
 - Use curl command as mentioned below to create a get_helm.sh file to install helm.
     ```bash
     curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get-helm-3 > get_helm.sh
@@ -110,7 +113,7 @@ kubectl apply -f pod.yml
     echo "URL : http://$NODE_IP:$NODE_PORT_STATS/"
     ```
 
-### 5. Steps to install MongoDB using helm:
+### Steps to install MongoDB using helm:
 ##### If helm is not yet installed, use the following steps to install helm:
 - Use curl command as mentioned below to create a get_helm.sh file to install helm.
     ```bash
@@ -136,7 +139,7 @@ or create docker container in VM directly.
 sudo docker run -d --name=my-mongodb -e MONGODB_ROOT_PASSWORD=secretpassword -e MONGODB_USER="admin" -e MONGODB_DATABASE="stocktrader" -e MONGODB_PASS="secretpassword" -p 32008:27017 bitnami/mongodb:latest
 ```
 
-### 6. Deploy Statement service in OCP
+### Deploy Statement service in OCP
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd [stocktrader-jil-v2\src\statement](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/statement)\manifest
 - Create secrets for MongoDB and Host details:
@@ -165,7 +168,7 @@ systemctl status ssh
 
 **for more details follow statement service [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/statement)**
 
-### 7. Deploy Web notification in ocp:
+### Deploy Web notification in ocp:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd [stocktrader-jil-v2\src\webnotification](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/webnotification)\manifest
 - Get the value of APPGUIID, CLIENTSECRET, REGION, TAG, SERVERWEBKEY
@@ -188,7 +191,7 @@ systemctl status ssh
     ```
 **for more details follow web notification [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/webnotification)**
 
-### 8. Deploy new Tradr in ocp:
+### Deploy new Tradr in ocp:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd [stocktrader-jil-v2\src\tradr](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/tradr)\manifests
 - Get the value of AUDIENCE, ISSUER, TRADER_HOST, PORTFOLIO_HOST, STATEMENT_HOST, INGRESS_HOST.
@@ -219,7 +222,7 @@ systemctl status ssh
 
 **for more details follow New Tradr [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/tradr)**
 
-### 9. Migration guidelines to cloud
+### Migration guidelines to cloud
 
 [above]: <https://github.com/vmware-ibm-jil/stocktrader-jil-v2#deployment-of-stock-trader-application-components>
 
