@@ -1,7 +1,7 @@
 # StockTraderJilv2 Installation:
 
 ## Table Of Contens : 
-- [Deployment of IBM DB2](#1-deployment-of-ibm-db2)
+- [Deployment of IBM DB2](#deployment)
 - [Deployment of Stock Trader application components](#deployment-of-stock-trader-application-components)
 - [Deploy notification service in OCP](#deploy-notification-service-in-ocp)
 - [Steps to install RabbitMQ using helm](#steps-to-install-rabbitmq-using-helm)
@@ -11,8 +11,8 @@
 - [Deploy new Tradr in OCP](#deploy-new-tradr-in-ocp)
 - [Migration guidelines to cloud](#migration-guidelines-to-cloud)
 
-
-### 1 Deployment of IBM DB2
+<a name="deployment"></a>
+### 1. Deployment of IBM DB2
 
 - Provision one ubuntu-16.04 DB2 VM2 
 - Install Docker on Ubuntu OS [link](https://docs.docker.com/engine/install/ubuntu/)
