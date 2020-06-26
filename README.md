@@ -1,6 +1,8 @@
 # StockTraderJilv2 Installation:
 
 ## Table Of Contens : 
+[Introduction](#introduction)
+
 [1. Deployment of IBM DB2](#deployment-of-ibm-db2)
 
 [2. Deployment of Stock Trader application components](#deployment-of-stock-trader-application-components)
@@ -18,6 +20,16 @@
 [8. Deploy new Tradr in OCP](#deploy-new-tradr-in-ocp)
 
 [9. Migration guidelines to cloud](#migration-guidelines-to-cloud)
+
+<a name="introduction"></a>
+## Introduction
+The IBM Stock Trader application is a simple stock trading sample where you can create various stock portfolios and add shares of stock to each for a commission. It keeps track of each porfolio's total value and its loyalty level which affects the commission charged per transaction. It sends notifications of changes in loyalty level. It also lets you submit feedback on the application which can result in earning free (zero commission) trades, based on the tone of the feedback.
+It also send notification to the subscribed user and logged in user can download statement of the transaction.
+The overall architecture looks like the following diagram:
+
+<p align="center">
+<img alt="st-v2" src="images/workflow.png"/>
+</p>
 
 <a name="deployment-of-ibm-db2"></a>
 ### 1. Deployment of IBM DB2:
