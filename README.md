@@ -1,18 +1,26 @@
 # StockTraderJilv2 Installation:
 
 ## Table Of Contens : 
-- [Deployment of IBM DB2](#deployment)
-- [Deployment of Stock Trader application components](#deployment-of-stock-trader-application-components)
-- [Deploy notification service in OCP](#deploy-notification-service-in-ocp)
-- [Steps to install RabbitMQ using helm](#steps-to-install-rabbitmq-using-helm)
-- [Steps to install MongoDB using helm](#steps-to-install-mongodb-using-helm)
-- [Deploy Statement service in OCP](#deploy-statement-service-in-ocp)
-- [Deploy Web notification in OCP](#deploy-web-notification-in-ocp)
-- [Deploy new Tradr in OCP](#deploy-new-tradr-in-ocp)
-- [Migration guidelines to cloud](#migration-guidelines-to-cloud)
+[1. Deployment of IBM DB2](#deployment-of-ibm-db2)
 
-<a name="deployment"></a>
-### 1. Deployment of IBM DB2
+[2. Deployment of Stock Trader application components](#deployment-of-stock-trader-application-components)
+
+[3. Deploy notification service in OCP](#deploy-notification-service-in-ocp)
+
+[4. Steps to install RabbitMQ using helm](#steps-to-install-rabbitmq-using-helm)
+
+[5. Steps to install MongoDB using helm](#steps-to-install-mongodb-using-helm)
+
+[6. Deploy Statement service in OCP](#deploy-statement-service-in-ocp)
+
+[7. Deploy Web notification in OCP](#deploy-web-notification-in-ocp)
+
+[8. Deploy new Tradr in OCP](#deploy-new-tradr-in-ocp)
+
+[9. Migration guidelines to cloud](#migration-guidelines-to-cloud)
+
+<a name="deployment-of-ibm-db2"></a>
+### 1. Deployment of IBM DB2:
 
 - Provision one ubuntu-16.04 DB2 VM2 
 - Install Docker on Ubuntu OS [link](https://docs.docker.com/engine/install/ubuntu/)
@@ -32,7 +40,8 @@
     -   Check the DB2 access from VM1 - Telnet port 50000
     -   Also can check the JDBC connection through eclipse plugin or Java program
 
-### Deployment of Stock Trader application components
+<a name="deployment-of-stock-trader-application-components"></a>
+### 2. Deployment of Stock Trader application components: 
 
 - Prerequisite: DB2 VM is up and accessible
 - Provision Ubuntu 16.04 VM
@@ -60,7 +69,8 @@
 
 **for more details follow portfolio [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/portfolio)**
 
-### Deploy notification service in OCP
+<a name="deploy-notification-service-in-ocp"></a>
+### 3. Deploy notification service in OCP:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd [stocktrader-jil-v2\src\notification](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/notification)\manifest
 - Create secrets for RabbitMQ and IBM Cloud Push services details:
@@ -83,7 +93,8 @@ kubectl apply -f pod.yml
 
 **for more details follow notification [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/notification)**
 
-### Steps to install RabbitMQ using helm
+<a name="steps-to-install-rabbitmq-using-helm"></a>
+### 4. Steps to install RabbitMQ using helm:
 - Use curl command as mentioned below to create a get_helm.sh file to install helm.
     ```bash
     curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get-helm-3 > get_helm.sh
@@ -121,8 +132,8 @@ kubectl apply -f pod.yml
     ```bash
     echo "URL : http://$NODE_IP:$NODE_PORT_STATS/"
     ```
-
-### Steps to install MongoDB using helm
+<a name="steps-to-install-mongodb-using-helm"></a>
+### 5. Steps to install MongoDB using helm:
 ##### If helm is not yet installed, use the following steps to install helm:
 - Use curl command as mentioned below to create a get_helm.sh file to install helm.
     ```bash
@@ -147,8 +158,8 @@ or create docker container in VM directly.
 ```bash
 sudo docker run -d --name=my-mongodb -e MONGODB_ROOT_PASSWORD=secretpassword -e MONGODB_USER="admin" -e MONGODB_DATABASE="stocktrader" -e MONGODB_PASS="secretpassword" -p 32008:27017 bitnami/mongodb:latest
 ```
-
-### Deploy Statement service in OCP
+<a name="deploy-statement-service-in-ocp"></a>
+### 6. Deploy Statement service in OCP:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd [stocktrader-jil-v2\src\statement](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/statement)\manifest
 - Create secrets for MongoDB and Host details:
@@ -177,7 +188,8 @@ systemctl status ssh
 
 **for more details follow statement service [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/statement)**
 
-### Deploy Web notification in OCP
+<a name="deploy-web-notification-in-ocp"></a>
+### 7. Deploy Web notification in OCP:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd [stocktrader-jil-v2\src\webnotification](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/webnotification)\manifest
 - Get the value of APPGUIID, CLIENTSECRET, REGION, TAG, SERVERWEBKEY
@@ -200,7 +212,8 @@ systemctl status ssh
     ```
 **for more details follow web notification [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/webnotification)**
 
-### Deploy new Tradr in OCP
+<a name="deploy-new-tradr-in-ocp"></a>
+### 8. Deploy new Tradr in OCP:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd [stocktrader-jil-v2\src\tradr](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/tradr)\manifests
 - Get the value of AUDIENCE, ISSUER, TRADER_HOST, PORTFOLIO_HOST, STATEMENT_HOST, INGRESS_HOST.
@@ -231,7 +244,8 @@ systemctl status ssh
 
 **for more details follow New Tradr [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/tradr)**
 
-### Migration guidelines to cloud
+<a name="migration-guidelines-to-cloud"></a>
+### 9. Migration guidelines to cloud:
 
 [above]: <https://github.com/vmware-ibm-jil/stocktrader-jil-v2#deployment-of-stock-trader-application-components>
 
