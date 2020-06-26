@@ -86,8 +86,9 @@
 ```sh
 ping  iam.us-east.bluemix.net # from inside pod
 ```
-if above command does not work then apply pod.yml file.
+if above command does not work then apply pod.yml file and remove deployment.yml.
 ```sh
+kubectl delete -f deployment.yml
 kubectl apply -f pod.yml
 ```
 
