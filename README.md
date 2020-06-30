@@ -7,9 +7,9 @@
 
 [2. Deployment of Stock Trader application components](#deployment-of-stock-trader-application-components)
 
-[3. Deploy notification service in OCP](#deploy-notification-service-in-ocp)
+[3. Steps to install RabbitMQ using helm](#steps-to-install-rabbitmq-using-helm)
 
-[4. Steps to install RabbitMQ using helm](#steps-to-install-rabbitmq-using-helm)
+[4. Deploy notification service in OCP](#deploy-notification-service-in-ocp)
 
 [5. Steps to install MongoDB using helm](#steps-to-install-mongodb-using-helm)
 
@@ -67,6 +67,7 @@ The overall architecture looks like the following diagram:
     ```
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd [stocktrader-jil-v2\ installation](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/installation)
+- Configure the docker-compose.yml file for **JDBC_HOST**, **MQ_HOST_NAME**, **MQ_PORT**, **MQ_QUEUE**
 - Execute the below Command to pull the required images and then start service deployments
     ```bash
     COMPOSE_HTTP_TIMEOUT=300 docker-compose up -d
@@ -81,8 +82,62 @@ The overall architecture looks like the following diagram:
 
 **for more details follow portfolio [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/portfolio)**
 
+<a name="steps-to-install-rabbitmq-using-helm"></a>
+### 3. Steps to install RabbitMQ using helm:
+- Use curl command as mentioned below to create a get_helm.sh file to install helm.
+    ```bash
+    curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get-helm-3 > get_helm.sh
+    ```
+- Get read, write and execute permission for the file "get_helm.sh" using the following command
+    ```bash
+    chmod 700 get_helm.sh
+    ```  
+- Execute the get_helm.sh file to install helm "./get_helm.sh"
+- Once helm is installed, add bitnami repo to your setup using the following command
+    ```bash
+    helm repo add bitnami https://charts.bitnami.com/bitnami
+    ```
+- Now use the following command to install rabbitMQ using helm.
+    ```bash
+    helm install my-release --set rabbitmq.username=admin,rabbitmq.password=secretpassword,persistence.enabled=false,service.nodePort=32004,service.nodeTlsPort=32005,service.type=NodePort bitnami/rabbitmq --namespace stocktrader --version 6.25.13
+
+    ``` 
+    or  (If the statefulset-controller gives error, we can disable it)
+    ```bash
+    helm install my-release --set rabbitmq.username=admin,rabbitmq.password=secretpassword,persistence.enabled=false,service.nodePort=32004,service.nodeTlsPort=32005,service.type=NodePort,securityContext.enabled=false bitnami/rabbitmq --namespace stocktrader --version 6.25.13
+    ```
+- Set external IP to expose to host machine.
+    ```bash
+    oc expose service <service-name>
+    ```
+    ```bash
+    oc patch svc <name> -p '{"spec":{"externalIPs":["<ip_address>"]}}'
+    ```
+##### Below are some important commands:
+- To obtain the NodePort IP and Ports:
+    ```bash
+    A. export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}") 
+    B. export NODE_PORT_AMQP=$(kubectl get --namespace default -o jsonpath="{.spec.ports[1].nodePort}" services my-release-rabbitmq)
+    C. export NODE_PORT_STATS=$(kubectl get --namespace default -o jsonpath="{.spec.ports[3].nodePort}" services my-release-rabbitmq)
+    ```
+- To Access the RabbitMQ AMQP port:
+    ```bash
+    echo "URL : amqp://$NODE_IP:$NODE_PORT_AMQP/"
+    ```
+- To Access the RabbitMQ Management interface:
+    ```bash
+    echo "URL : http://$NODE_IP:$NODE_PORT_STATS/"
+    ```
+- Set external IP to expose to host machine.
+    ```bash
+    oc expose service <service-name>
+    ```
+    ```bash
+    oc patch svc <name> -p '{"spec":{"externalIPs":["<NODE_IP>"]}}'
+    ```
+
 <a name="deploy-notification-service-in-ocp"></a>
-### 3. Deploy notification service in OCP:
+### 4. Deploy notification service in OCP:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd [stocktrader-jil-v2\src\notification](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/notification)\manifest
 - Create secrets for RabbitMQ and IBM Cloud Push services details:
@@ -106,45 +161,6 @@ kubectl apply -f pod.yml
 
 **for more details follow notification [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/notification)**
 
-<a name="steps-to-install-rabbitmq-using-helm"></a>
-### 4. Steps to install RabbitMQ using helm:
-- Use curl command as mentioned below to create a get_helm.sh file to install helm.
-    ```bash
-    curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get-helm-3 > get_helm.sh
-    ```
-- Get read, write and execute permission for the file "get_helm.sh" using the following command
-    ```bash
-    chmod 700 get_helm.sh
-    ```  
-- Execute the get_helm.sh file to install helm "./get_helm.sh"
-- Once helm is installed, add bitnami repo to your setup using the following command
-    ```bash
-    helm repo add bitnami https://charts.bitnami.com/bitnami
-    ``` 
-- Now use the following command to install rabbitMQ using helm.
-    ```bash
-    helm install my-release --set rabbitmq.username=admin,rabbitmq.password=secretpassword,persistence.enabled=false,service.nodePort=32004,service.nodeTlsPort=32005,service.type=NodePort bitnami/rabbitmq --namespace stocktrader --version 6.25.13
-
-    ``` 
-    or  (If the statefulset-controller gives error, we can disable it)
-    ```bash
-    helm install my-release --set rabbitmq.username=admin,rabbitmq.password=secretpassword,persistence.enabled=false,service.nodePort=32004,service.nodeTlsPort=32005,service.type=NodePort,securityContext.enabled=false bitnami/rabbitmq --namespace stocktrader --version 6.25.13
-    ```
-##### Below are some important commands:
-- To obtain the NodePort IP and Ports:
-    ```bash
-    A. export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}") 
-    B. export NODE_PORT_AMQP=$(kubectl get --namespace default -o jsonpath="{.spec.ports[1].nodePort}" services my-release-rabbitmq)
-    C. export NODE_PORT_STATS=$(kubectl get --namespace default -o jsonpath="{.spec.ports[3].nodePort}" services my-release-rabbitmq)
-    ```
-- To Access the RabbitMQ AMQP port:
-    ```bash
-    echo "URL : amqp://$NODE_IP:$NODE_PORT_AMQP/"
-    ```
-- To Access the RabbitMQ Management interface:
-    ```bash
-    echo "URL : http://$NODE_IP:$NODE_PORT_STATS/"
-    ```
 <a name="steps-to-install-mongodb-using-helm"></a>
 ### 5. Steps to install MongoDB using helm:
 ##### If helm is not yet installed, use the following steps to install helm:
@@ -186,7 +202,7 @@ sudo docker run -d --name=my-mongodb -e MONGODB_ROOT_PASSWORD=secretpassword -e 
     kubectl apply -f service.yml
     kubectl apply -f ingress.yml
     ``` 
-**Note:** For app LauchPad Mongo Intance
+**Note:** For app LauchPad Mongo Instance
 - Open port by running 
 ```sh
 sudo ufw allow <PORT>

@@ -15,3 +15,5 @@ spec:
       name: https
   selector:
     app: webnotification
+  externalIPs:
+    - 172.21.21.165
