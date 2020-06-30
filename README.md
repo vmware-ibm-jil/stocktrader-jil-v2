@@ -7,7 +7,7 @@
 
 [2. Deployment of Stock Trader application components](#deployment-of-stock-trader-application-components)
 
-[3. Steps to install RabbitMQ using helm](#steps-to-install-rabbitmq-using-helm)
+[3. Steps to install RabbitMQ using helm in OCP](#steps-to-install-rabbitmq-using-helm)
 
 [4. Deploy notification service in OCP](#deploy-notification-service-in-ocp)
 
@@ -83,7 +83,7 @@ The overall architecture looks like the following diagram:
 **for more details follow portfolio [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/portfolio)**
 
 <a name="steps-to-install-rabbitmq-using-helm"></a>
-### 3. Steps to install RabbitMQ using helm:
+### 3. Steps to install RabbitMQ using helm in OCP:
 - Use curl command as mentioned below to create a get_helm.sh file to install helm.
     ```bash
     curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get-helm-3 > get_helm.sh
