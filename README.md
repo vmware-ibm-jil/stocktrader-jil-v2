@@ -65,7 +65,6 @@ The overall architecture looks like the following diagram:
     #verify using the below command
     docker-compose --version
     ```
-- Clone this repo
 - Go to directory cd [stocktrader-jil-v2\ installation](/installation)
 - Configure the docker-compose.yml file for **JDBC_HOST**, **MQ_HOST_NAME**, **MQ_PORT**, **MQ_QUEUE**
 - Execute the below Command to pull the required images and then start service deployments
@@ -138,7 +137,6 @@ The overall architecture looks like the following diagram:
 
 <a name="deploy-notification-service-in-ocp"></a>
 ### 4. Deploy notification service in OCP:
-- Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd [stocktrader-jil-v2\src\notification](/src/notification)\manifest
 - Create secrets for RabbitMQ and IBM Cloud Push services details:
     ```bash
@@ -189,7 +187,6 @@ sudo docker run -d --name=my-mongodb -e MONGODB_ROOT_PASSWORD=secretpassword -e 
 ```
 <a name="deploy-statement-service-in-ocp"></a>
 ### 6. Deploy Statement service in OCP:
-- Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd [stocktrader-jil-v2\src\statement](/src/statement)\manifest
 - Create secrets for MongoDB and Host details:
     ```bash
@@ -219,7 +216,6 @@ systemctl status ssh
 
 <a name="deploy-web-notification-in-ocp"></a>
 ### 7. Deploy Web notification in OCP:
-- Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd [stocktrader-jil-v2\src\webnotification](/src/webnotification)\manifest
 - Get the value of APPGUIID, CLIENTSECRET, REGION, TAG, SERVERWEBKEY
 - Create secret using following command
@@ -243,7 +239,6 @@ systemctl status ssh
 
 <a name="deploy-new-tradr-in-ocp"></a>
 ### 8. Deploy new Tradr in OCP:
-- Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
 - Go to directory cd [stocktrader-jil-v2\src\tradr](/src/tradr)\manifests
 - Get the value of AUDIENCE, ISSUER, TRADER_HOST, PORTFOLIO_HOST, STATEMENT_HOST, INGRESS_HOST.
 - Create secret using following commands
@@ -276,7 +271,7 @@ systemctl status ssh
 <a name="migration-guidelines-to-cloud"></a>
 ### 9. Migration guidelines to cloud:
 
-[above]: <https://github.com/vmware-ibm-jil/stocktrader-jil-v2#deployment-of-stock-trader-application-components>
+[above]: <#deployment-of-stock-trader-application-components>
 
 1. While the VMs are migrated to cloud the VMs will recieve new IPs. So, some static ip changes will be needed in the docker-compose file inside installation directory.
 2. Update the "JDBC_HOST" IP in the docker-compose file under "service -> portfolio -> environment"
