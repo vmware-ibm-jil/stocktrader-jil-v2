@@ -65,8 +65,8 @@ The overall architecture looks like the following diagram:
     #verify using the below command
     docker-compose --version
     ```
-- Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
-- Go to directory cd [stocktrader-jil-v2\ installation](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/installation)
+- Clone this repo
+- Go to directory cd [stocktrader-jil-v2\ installation](/installation)
 - Configure the docker-compose.yml file for **JDBC_HOST**, **MQ_HOST_NAME**, **MQ_PORT**, **MQ_QUEUE**
 - Execute the below Command to pull the required images and then start service deployments
     ```bash
@@ -80,7 +80,7 @@ The overall architecture looks like the following diagram:
 - Now once all the services are up and running –Import and deploy  stocktrader-jil-v2/src/portfolio/stock-trader-loyalty-decision-service.zip on ODM `http://<Ubuntu-VM-IP>:9060` (odmAdmin/odmAdmin)
 - Now you can login to Trader UI with link `https://<Ubuntu-VM-IP>:9443/trader/login` (admin/admin)
 
-**for more details follow portfolio [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/portfolio)**
+**for more details follow portfolio [README](/src/portfolio)**
 
 <a name="steps-to-install-rabbitmq-using-helm"></a>
 ### 3. Steps to install RabbitMQ using helm in OCP:
@@ -139,7 +139,7 @@ The overall architecture looks like the following diagram:
 <a name="deploy-notification-service-in-ocp"></a>
 ### 4. Deploy notification service in OCP:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
-- Go to directory cd [stocktrader-jil-v2\src\notification](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/notification)\manifest
+- Go to directory cd [stocktrader-jil-v2\src\notification](/src/notification)\manifest
 - Create secrets for RabbitMQ and IBM Cloud Push services details:
     ```bash
     kubectl create secret generic rbq --from-literal=user=admin --from-literal=password=secretpassword --from-literal=vhost=/ --from-literal=host=172.17.76.32 --from-literal=port=32004 --from-literal=queue=stocktrader
@@ -159,7 +159,7 @@ kubectl delete -f deployment.yml
 kubectl apply -f pod.yml
 ```
 
-**for more details follow notification [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/notification)**
+**for more details follow notification [README](/src/notification)**
 
 <a name="steps-to-install-mongodb-using-helm"></a>
 ### 5. Steps to install MongoDB using helm:
@@ -190,7 +190,7 @@ sudo docker run -d --name=my-mongodb -e MONGODB_ROOT_PASSWORD=secretpassword -e 
 <a name="deploy-statement-service-in-ocp"></a>
 ### 6. Deploy Statement service in OCP:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
-- Go to directory cd [stocktrader-jil-v2\src\statement](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/statement)\manifest
+- Go to directory cd [stocktrader-jil-v2\src\statement](/src/statement)\manifest
 - Create secrets for MongoDB and Host details:
     ```bash
     # NOTE : We will need to use "root" user for mongoDB and the authenticationdb should always be "admin"
@@ -215,12 +215,12 @@ systemctl status ssh
 ```
 - Try remote login to mongo db from outside the VM.
 
-**for more details follow statement service [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/statement)**
+**for more details follow statement service [README](/src/statement)**
 
 <a name="deploy-web-notification-in-ocp"></a>
 ### 7. Deploy Web notification in OCP:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
-- Go to directory cd [stocktrader-jil-v2\src\webnotification](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/webnotification)\manifest
+- Go to directory cd [stocktrader-jil-v2\src\webnotification](/src/webnotification)\manifest
 - Get the value of APPGUIID, CLIENTSECRET, REGION, TAG, SERVERWEBKEY
 - Create secret using following command
     ```bash
@@ -239,12 +239,12 @@ systemctl status ssh
     ```bash
     oc patch svc <name> -p '{"spec":{"externalIPs":["<ip_address>"]}}'
     ```
-**for more details follow web notification [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/webnotification)**
+**for more details follow web notification [README](/src/webnotification)**
 
 <a name="deploy-new-tradr-in-ocp"></a>
 ### 8. Deploy new Tradr in OCP:
 - Clone the repo [https://github.com/vmware-ibm-jil/stocktrader-jil-v2](https://github.com/vmware-ibm-jil/stocktrader-jil-v2)
-- Go to directory cd [stocktrader-jil-v2\src\tradr](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/tradr)\manifests
+- Go to directory cd [stocktrader-jil-v2\src\tradr](/src/tradr)\manifests
 - Get the value of AUDIENCE, ISSUER, TRADER_HOST, PORTFOLIO_HOST, STATEMENT_HOST, INGRESS_HOST.
 - Create secret using following commands
     ```bash
@@ -271,7 +271,7 @@ systemctl status ssh
     oc patch svc <name> -p '{"spec":{"externalIPs":["<ip_address>"]}}'
     ```
 
-**for more details follow New Tradr [README](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/src/tradr)**
+**for more details follow New Tradr [README](/src/tradr)**
 
 <a name="migration-guidelines-to-cloud"></a>
 ### 9. Migration guidelines to cloud:
@@ -280,7 +280,7 @@ systemctl status ssh
 
 1. While the VMs are migrated to cloud the VMs will recieve new IPs. So, some static ip changes will be needed in the docker-compose file inside installation directory.
 2. Update the "JDBC_HOST" IP in the docker-compose file under "service -> portfolio -> environment"
-3. Go to directory cd [stocktrader-jil-v2\ installation](https://github.com/vmware-ibm-jil/stocktrader-jil-v2/tree/master/installation)
+3. Go to directory cd [stocktrader-jil-v2\ installation](/installation)
 ```sh
 docker-compose down
 ```
