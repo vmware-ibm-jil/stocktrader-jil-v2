@@ -66,7 +66,7 @@ The overall architecture looks like the following diagram:
     docker-compose --version
     ```
 - Go to directory cd [stocktrader-jil-v2\ installation](/installation)
-- Configure the docker-compose.yml file for **JDBC_HOST**, **MQ_HOST_NAME**, **MQ_PORT**, **MQ_QUEUE**
+- Configure the docker-compose.yml file for **JDBC_HOST**, **MQ_USR**, **MQ_PWD**, **MQ_HOST_NAME**, **MQ_PORT**, **MQ_QUEUE**
 - Execute the below Command to pull the required images and then start service deployments
     ```bash
     COMPOSE_HTTP_TIMEOUT=300 docker-compose up -d
